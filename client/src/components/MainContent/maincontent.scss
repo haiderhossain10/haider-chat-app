@@ -1,0 +1,163 @@
+.ui-chat-box {
+    width: 100%;
+    height: 100vh;
+
+
+    &_header {
+        height: 80px;
+        display: flex;
+        align-items: center;
+        padding: 0 1rem;
+        box-shadow: 3px 3px 26px -23px rgba(0, 0, 0, 0.75);
+        -webkit-box-shadow: 3px 3px 26px -23px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 3px 3px 26px -23px rgba(0, 0, 0, 0.75);
+
+        &_profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            img {
+                height: 40px;
+                width: 40px;
+                object-fit: contain;
+                border-radius: 50%;
+                border: 1px solid #ddd;
+            }
+        }
+    }
+
+    &_body {
+        padding: 1rem;
+        height: calc(100vh - 180px);
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        &::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px #eee;
+            border-radius: 10px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: #ddd;
+            border-radius: 10px;
+        }
+
+        &_seen {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1.4rem;
+
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+
+            img {
+                height: 15px;
+                width: 15px;
+                object-fit: contain;
+                border-radius: 50%;
+                border: 1px solid #ddd;
+                align-self: flex-end;
+            }
+        }
+
+        &_card {
+            margin-bottom: 1.4rem;
+
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+
+            &_box {
+                display: flex;
+                gap: 10px;
+
+                &.box-right {
+                    flex-direction: row-reverse;
+                }
+            }
+
+            img {
+                height: 20px;
+                width: 20px;
+                object-fit: contain;
+                border-radius: 50%;
+                border: 1px solid #ddd;
+                align-self: flex-end;
+            }
+
+            &_content {
+                width: 60%;
+                display: flex;
+                flex-direction: column;
+
+                &.content-right {
+                    align-items: flex-end;
+
+                    h6 {
+                        p {
+                            text-align: right;
+                        }
+                    }
+                }
+
+                h6 {
+                    background-color: #ddd;
+                    padding: 10px;
+                    border-radius: 4px;
+                    margin-bottom: 6px;
+                    display: inline-block;
+
+                    &:last-of-type {
+                        margin-bottom: 0;
+                    }
+
+                    p {
+                        font-size: 10px;
+                        color: #838383
+                    }
+                }
+            }
+        }
+    }
+
+    &_input {
+        padding: 1rem;
+        display: grid;
+        grid-template-columns: 1fr 40px;
+        background-color: rgb(247, 247, 247);
+        height: 100px;
+        align-items: center;
+        gap: 10px;
+
+        input {
+            height: 40px;
+            padding: 0 1.4rem;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        .MuiButtonBase-root.selected {
+            background-color: rgb(197, 208, 255);
+            color: rgb(69, 95, 209);
+        }
+
+        &_emoji {
+            position: relative;
+
+            .emoji-picker-react {
+                position: absolute;
+                bottom: 80px;
+                right: 1rem;
+            }
+        }
+    }
+}

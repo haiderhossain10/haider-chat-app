@@ -1,0 +1,49 @@
+.ui-sidebar {
+    width: 320px;
+    padding: 20px;
+    height: 100vh;
+    box-shadow: 3px 3px 26px -23px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 3px 3px 26px -23px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 3px 26px -23px rgba(0, 0, 0, 0.75);
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px #eee;
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #ddd;
+        border-radius: 10px;
+    }
+
+    &_head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &-img {
+            img {
+                height: 30px;
+                width: 30px;
+                object-fit: contain;
+                border-radius: 50%;
+                border: 1px solid #ddd;
+            }
+        }
+    }
+
+    &_find-box {
+        padding-top: 1.4rem;
+    }
+
+    &_chat-profile-list {
+        a {
+            text-decoration: none;
+        }
+    }
+}
