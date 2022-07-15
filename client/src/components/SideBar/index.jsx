@@ -5,7 +5,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { CgSearch } from "react-icons/cg";
 import { FormControl, Input, InputAdornment, Typography } from "@mui/material";
 import ChatListBox from "../ChatListBox";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
     useGetConversationQuery,
     useGetUsersQuery,
@@ -116,13 +116,13 @@ const SideBar = () => {
                                 ? getSearchedData.map((item, index) => {
                                       return (
                                           <>
-                                              <Link to={`/chat/${item._id}`}>
+                                              <NavLink to={`/chat/${item._id}`}>
                                                   <UserProfileList
                                                       key={index}
                                                       name={`${item.firstName} ${item.lastName}`}
                                                       status={item.status}
                                                   />
-                                              </Link>
+                                              </NavLink>
                                           </>
                                       );
                                   })
@@ -134,7 +134,7 @@ const SideBar = () => {
                                 ? "Loading..."
                                 : getConversationData.map((item, index) => {
                                       return (
-                                          <Link
+                                          <NavLink
                                               to={`/chat/${
                                                   item.createdId._id ===
                                                   tokenDecode.id
@@ -151,7 +151,7 @@ const SideBar = () => {
                                                   data={item}
                                                   id={tokenDecode.id}
                                               />
-                                          </Link>
+                                          </NavLink>
                                       );
                                   })}
                         </>

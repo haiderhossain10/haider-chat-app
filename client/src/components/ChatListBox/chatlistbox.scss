@@ -4,16 +4,8 @@
     gap: 10px;
     position: relative;
     padding: 1rem 0;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid #ddd;
     transition: all .3s;
-
-    &:last-of-type {
-        border-bottom: 0;
-    }
-
-    &:hover {
-        border-bottom-color: #ddd;
-    }
 
     &_img {
         img {

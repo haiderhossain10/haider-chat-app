@@ -5,7 +5,11 @@ import { BsFillEmojiSmileFill } from "react-icons/bs";
 import Picker from "emoji-picker-react";
 import { useRef, useState } from "react";
 import { useEffect } from "react";
-import { useGetPostChatMutation } from "../../api/services/userApi";
+import {
+    useGetPostChatMutation,
+    usePostChatMutation,
+    usePostConversationMutation,
+} from "../../api/services/userApi";
 import { useDispatch, useSelector } from "react-redux";
 import { initChat } from "../../store/features/userSlice";
 import { useParams } from "react-router-dom";
@@ -19,8 +23,9 @@ const MainContent = () => {
     const dispatch = useDispatch();
     const getChatStateData = useSelector((state) => state.user.chat);
     const param = useParams();
-    const formatter = buildFormatter(enStrings);
     const [getChatsData] = useGetPostChatMutation();
+    const [postChat] = usePostChatMutation();
+    const [postConversation] = usePostConversationMutation();
 
     // jwt decode
     const token = JSON.parse(window.localStorage.getItem("_haiderLogin")).token;
@@ -29,7 +34,7 @@ const MainContent = () => {
     // scroll top to bottom
     useEffect(() => {
         msgBoxRef.current.scrollTop = msgBoxRef.current.scrollHeight;
-    }, []);
+    });
 
     useEffect(() => {
         const postForGetChats = async () => {
@@ -41,7 +46,7 @@ const MainContent = () => {
             dispatch(initChat(res.data?.data));
         };
         postForGetChats();
-    }, [getChatsData.isLoading, param.id]);
+    }, [getChatsData.isLoading, param.id, postChat]);
 
     // emoji button
     const [isShowedEmoji, setShowedEmoje] = useState(false);
@@ -98,8 +103,8 @@ const MainContent = () => {
                                             </>
                                         ) : (
                                             <>
-                                                <div className="ui-chat-box_body_card">
-                                                    <div className="ui-chat-box_body_card_box">
+                                                <div className="ui-chat-box_body_card ">
+                                                    <div className="ui-chat-box_body_card_box box-left">
                                                         <img
                                                             src={Avatar}
                                                             alt="profile"
@@ -114,11 +119,6 @@ const MainContent = () => {
                                                                                 .to
                                                                                 .createdAt
                                                                         }
-                                                                        <br />
-                                                                        {item.seen ===
-                                                                        "SEEN"
-                                                                            ? "Seen"
-                                                                            : "Unseen"}
                                                                     </p>
                                                                 </Typography>
                                                             </div>
@@ -127,33 +127,45 @@ const MainContent = () => {
                                                 </div>
                                             </>
                                         )}
-                                        {/* {item.seen === "SEEN" ? (
-                                            <>
-                                                {console.log(item[1])}
-                                                <div className="ui-chat-box_body_seen">
-                                                    <img
-                                                        src={Avatar}
-                                                        alt="profile"
-                                                    />
-                                                </div>
-                                            </>
-                                        ) : (
-                                            ""
-                                        )} */}
+                                        {/* <div className="ui-chat-box_body_seen">
+                                            <img src={Avatar} alt="profile" />
+                                        </div> */}
                                     </>
                                 </div>
                             );
                         })}
                 </div>
                 <div className="ui-chat-box_input">
-                    <input
-                        type="text"
-                        placeholder="Type..."
-                        value={getChatMsg}
-                        onChange={(e) => {
-                            setChatMsg(e.target.value);
+                    <form
+                        onSubmit={async (e) => {
+                            e.preventDefault();
+
+                            const conData = {
+                                createdId: tokenDecode.id,
+                                withCreatedId: param.id,
+                            };
+
+                            await postConversation(conData);
+
+                            const formData = {
+                                msg: getChatMsg,
+                                to: param.id,
+                                from: tokenDecode.id,
+                            };
+
+                            await postChat(formData);
+                            setChatMsg(" ");
                         }}
-                    />
+                    >
+                        <input
+                            type="text"
+                            placeholder="Type..."
+                            value={getChatMsg}
+                            onChange={async (e) => {
+                                setChatMsg(e.target.value);
+                            }}
+                        />
+                    </form>
                     <div className="ui-chat-box_input_emoji">
                         <IconButton
                             size="large"

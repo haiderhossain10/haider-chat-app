@@ -74,7 +74,12 @@ export const userStatus = async (req, res) => {
 export const userConversation = async (req, res) => {
     const { createdId, withCreatedId } = req.body;
     try {
-        const find = await Conversation.find({ createdId, withCreatedId });
+        const find = await Conversation.find({
+            $or: [
+                { createdId, withCreatedId },
+                { createdId: withCreatedId, withCreatedId: createdId },
+            ],
+        });
         if (find.length === 0) {
             await Conversation.create({ createdId, withCreatedId });
             res.status(200).json({

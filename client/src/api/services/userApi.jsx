@@ -29,6 +29,24 @@ export const userApi = createApi({
                 };
             },
         }),
+        postChat: builder.mutation({
+            query: (data) => {
+                return {
+                    url: "/user/chat",
+                    method: "POST",
+                    body: data,
+                };
+            },
+        }),
+        postConversation: builder.mutation({
+            query: (data) => {
+                return {
+                    url: "/user/conversation",
+                    method: "POST",
+                    body: data,
+                };
+            },
+        }),
     }),
 });
 
@@ -36,4 +54,6 @@ export const {
     useGetUsersQuery,
     useGetConversationQuery,
     useGetPostChatMutation,
+    usePostChatMutation,
+    usePostConversationMutation,
 } = userApi;
